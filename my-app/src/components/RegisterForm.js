@@ -16,8 +16,7 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const response = await axios.post('http://localhost:4000/api/users/register', formData);
-       const response = await axios.post('https://register-ui-8vrh.onrender.com/api/users/register', formData);
+      const response = await axios.post('http://localhost:4000/api/users/register', formData);
       setMessage(response.data.message);
       setFormData({ name: '', email: '', password: '' });
     } catch (error) {
