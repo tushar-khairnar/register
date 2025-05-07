@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 // import axios from 'axios';
 // const dotenv = require('dotenv');
 // dotenv.config();
@@ -29,11 +29,21 @@ const RegisterForm = () => {
         },
         body: JSON.stringify(formData),
       });
-      setMessage(response.data.message);
-      setFormData({ name: '', email: '', password: '' });
-    } catch (error) {
-      setMessage(error.response?.data?.message || 'Error registering user');
+    //   setMessage(response.data.message);
+    //   setFormData({ name: '', email: '', password: '' });
+    // } catch (error) {
+    //   setMessage(error.response?.data?.message || 'Error registering user');
+    // }
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
+    
+    const data = await response.json();
+    setMessage(data.message || 'Registration successful');
+    setFormData({ name: '', email: '', password: '' });
+  } catch (error) {
+    setMessage(error.message || 'Error registering user');
+  }
   };
 
   return (
