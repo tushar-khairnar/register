@@ -16,7 +16,8 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
+      console.log("user register");
+      console.log(process.env.BACKEND_URL);
       // const response = await axios.post('http://localhost:4000/api/users/register', formData);
       const response = await axios.post(`${process.env.BACKEND_URL}/users/register`, formData);
       setMessage(response.data.message);
