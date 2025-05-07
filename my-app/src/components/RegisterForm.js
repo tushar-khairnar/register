@@ -18,7 +18,7 @@ const RegisterForm = () => {
     try {
       
       // const response = await axios.post('http://localhost:4000/api/users/register', formData);
-      const response = await axios.post('http://localhost:4000/api/users/register' || 'https://registration-application.onrender.com/api/users/register', formData);
+      const response = await axios.post(`${process.env.BACKEND_URL}/users/register`, formData);
       setMessage(response.data.message);
       setFormData({ name: '', email: '', password: '' });
     } catch (error) {
