@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -19,10 +19,25 @@ const RegisterForm = () => {
       console.log("user register");
       console.log(process.env.BACKEND_URL);
       // const response = await axios.post('http://localhost:4000/api/users/register', formData);
-      const response = await axios.post(`${process.env.BACKEND_URL}/users/register`, formData);
-      setMessage(response.data.message);
-      setFormData({ name: '', email: '', password: '' });
+      // const response = await axios.post(`${process.env.BACKEND_URL}/users/register`, formData);
+      const response = await fetch(`${process.env.BACKEND_URL || "https://registation-application.onrender.com/api"}/users/register`, {
+        method: "POST",
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        }),
+        headers: {
+          'Content-Type' : 'application/json'
+        }
+      })
+
+      const data = await response.json();
+      setMessage(data.message);
+      alert("User register successfullyy")
+      // setFormData({ name: '', email: '', password: '' });
     } catch (error) {
+      alert(error.message)
       setMessage(error.response?.data?.message || 'Error registering user');
     }
   };
