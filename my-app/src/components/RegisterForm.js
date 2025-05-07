@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 // import axios from 'axios';
+const dotenv = require('dotenv');
+dotenv.config();
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
