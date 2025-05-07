@@ -15,13 +15,7 @@ const app = express();
 connectDB();
 
 // Middleware
-
-app.use(cors({
-  origin: ["*"],
-  methods: ["*"]
-}));
-
-// app.use(cors({ origin: "http://localhost:3000" || process.env.FRONTEND_URL  /*'https://register-ui-8vrh.onrender.com'*/, methods: "*", credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", methods: ["GET", "POST"], credentials: true }));
 app.use(express.json());
 
 // Routes
