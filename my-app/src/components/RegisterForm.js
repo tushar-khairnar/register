@@ -18,7 +18,7 @@ const RegisterForm = () => {
     try {
       //const response = await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/users/register', formData); //http://localhost:4000 
 
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
