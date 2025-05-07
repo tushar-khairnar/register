@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +16,15 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/users/register', formData); //http://localhost:4000 
+      //const response = await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/users/register', formData); //http://localhost:4000 
+
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       setMessage(response.data.message);
       setFormData({ name: '', email: '', password: '' });
     } catch (error) {
