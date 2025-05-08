@@ -14,8 +14,40 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+// Define allowed origins
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://register-ui-8vrh.onrender.com',
+  'http://localhost:3000', // For local testing
+].filter(Boolean); // Remove undefined or falsy values
+
 // Middleware
-app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000", methods: ["GET", "POST"], credentials: true }));
+// app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000", methods: ["GET", "POST"], credentials: true }));
+// CORS configuration
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g., Postman) or allowed origins
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
+// Handle preflight OPTIONS requests
+app.options('*', cors());
+
+// Middleware to log requests for debugging
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} from ${req.get('origin')}`);
+  next();
+});
 app.use(express.json());
 
 // Routes
